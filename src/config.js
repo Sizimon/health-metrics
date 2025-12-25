@@ -1,5 +1,5 @@
 const config = {
-    PORT: 3000,
+    PORT: 5050,
     ALLOWED_ORIGINS: ['https://szymonsamus.dev', 'https://oktzy.com']
 }
 
