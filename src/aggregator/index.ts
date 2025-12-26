@@ -1,4 +1,4 @@
-import { metricStore, MetricEntry } from './metricStore';
+import { metricStore, MetricEntry } from './metricStore.js';
 type recievedData = {
     service: string;
     route: string;
