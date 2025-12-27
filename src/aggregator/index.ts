@@ -23,3 +23,17 @@ export function addEvent({ service, route, method, status, latencyMs }: recieved
     metricEntry.totalLatency += latencyMs;
     metricEntry.statusCounts[status] = (metricEntry.statusCounts[status] || 0) + 1;
 }
+
+export function resetMetrics({ service }: { service: string }) {
+    try {
+        if (metricStore.has(service)) {
+            metricStore.set(service, new Map<string, MetricEntry>());
+        }
+    } catch (error) {
+        console.error('Error resetting metrics:', error);
+    }
+}
+
+export function getMetrics({ service }: { service: string }) {
+    return metricStore.get(service);
+}
