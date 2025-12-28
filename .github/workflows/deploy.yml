@@ -3,7 +3,7 @@ name: Build and Push Metrics Image to Docker Hub
 on:
     push:
         branches:
-            - NONE (CHANGE LATER)
+            - main
 
 jobs:
     build:
