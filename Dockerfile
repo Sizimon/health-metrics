@@ -1,24 +1,22 @@
-# Build stage
-FROM node:20-alpine AS builder
-
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm ci
-
-COPY . .
-RUN npm run build
-
-# Production stage
 FROM node:20-alpine
 
+# Set working directory
 WORKDIR /app
 
+# Copy package.json and package-lock.json
 COPY package*.json ./
-RUN npm ci --production
 
-COPY --from=builder /app/dist ./dist
+# Install dependencies
+RUN npm install
 
+# Copy the rest of the application code
+COPY . .
+
+# Build TypeScript code
+RUN npm run build
+
+# Expose port 5050
 EXPOSE 5050
 
-CMD ["node", "dist/index.js"]
+# Start the server
+CMD ["node", "dist/src/index.js"]
