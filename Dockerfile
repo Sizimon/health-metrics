@@ -13,9 +13,9 @@ RUN npm install
 COPY . .
 
 # Build TypeScript code
-RUN npm run build
+RUN npx tsc
 
-# Expose port 5001
+# Expose port 5050
 EXPOSE 5050
 
 # Start the server
