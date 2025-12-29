@@ -1,25 +1,24 @@
-FROM node:20-alpine
+# Build stage
+FROM node:20-alpine AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
 COPY package*.json ./
-
-# Install ALL dependencies (including devDependencies for build)
 RUN npm ci
 
-# Copy the rest of the application code
 COPY . .
-
-# Build TypeScript code
 RUN npm run build
 
-# Remove devDependencies to reduce image size
-RUN npm prune --production
+# Production stage
+FROM node:20-alpine
 
-# Expose port 5050
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --production
+
+COPY --from=builder /app/dist ./dist
+
 EXPOSE 5050
 
-# Start the server
-CMD ["node", "dist/server.js"]
+CMD ["node", "dist/index.js"]
